@@ -1,3 +1,7 @@
+/*
+Deprecated
+*/
+
 #include "MPU6000.h"
 
 uint8_t divisor = 255; //possible that this must start from 254
@@ -17,10 +21,13 @@ void setup() {
 }
 
 void loop() {
+  int numSamples = 0;
   Serial.print("Sample rate divisor: "); Serial.print(divisor); Serial.println();
 
   accelerometer.setSampleRateDivisor(divisor);
-  delay(1000);
+
+  //This code was already written so we don't need it anymore
+  while (numSamples )
 
   if (divisor == 0) {
     Serial.println("Highest sample rate reached");
@@ -34,5 +41,5 @@ void loop() {
       delay(10000);
     }
   }
-  divisor--;
+  divisor -= 15;
 }
