@@ -20,7 +20,7 @@ void loop() {
   Serial.print("Sample rate divisor: "); Serial.print(divisor); Serial.println();
 
   accelerometer.setSampleRateDivisor(divisor);
-  delay(5000);
+  delay(1000);
 
   if (divisor == 0) {
     Serial.println("Highest sample rate reached");
