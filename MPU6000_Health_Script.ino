@@ -3,9 +3,6 @@
 uint8_t divisor = 255; //possible that this must start from 254
 MPU6000 accelerometer(1, false); // Sets sensor ID to 1 and debugging to false
 sensor_float_vec_t acc; // Saves acceleration readings in a vector structure
-unsigned long start;
-unsigned long end;
-unsigned long interval;
 
 void setup() {
 
@@ -23,13 +20,6 @@ void loop() {
   Serial.print("Sample rate divisor: "); Serial.print(divisor); Serial.println();
 
   accelerometer.setSampleRateDivisor(divisor);
-  
-  start = micros();
-  acc = accelerometer.getSample();
-  end = micros();
-
-  interval = end - start;
-  Serial.println(interval);
   delay(1000);
 
   if (divisor == 0) {
