@@ -1,6 +1,6 @@
 #include "MPU6000.h"
 
-uint8_t divisor = 0; //possible that this must start from 254
+uint8_t divisor = 255; //possible that this must start from 254
 MPU6000 accelerometer(1, false); // Sets sensor ID to 1 and debugging to false
 sensor_float_vec_t acc; // Saves acceleration readings in a vector structure
 
@@ -17,16 +17,22 @@ void setup() {
 }
 
 void loop() {
+  Serial.print("Sample rate divisor: "); Serial.print(divisor); Serial.println();
 
-  // Serial.print("Max. Sample Rate Divisor: "); Serial.print(ctr);
-  // Serial.println();
-  uint8_t divisor = uint8_t(ctr);
-  //Serial.print("Binary equivalent: "); Serial.print(divisor);
-  accelerometer.setSampleRateDivisor(ctr);
-  //if we fail right here we won't write our current divisor to the eeprom
-  //^^ meaning that the previous divisor value is our max sample rate
-  //(when we update this code for V6 that has eeprom)
-
+  accelerometer.setSampleRateDivisor(divisor);
   delay(5000);
-  ctr++;
+
+  if (divisor == 0) {
+    Serial.println("Highest sample rate reached");
+    /*
+    Making program stick in while loop so output doesn't become cluttered and we
+    don't set sample divisor rates that aren't valid (i.e. < 0). This health script
+    assumes it is being run manually with an operator monitoring the serial
+    output. This can be modified on V6 LunaSat with EEPROM.
+    */
+    while (1) {
+      delay(10000);
+    }
+  }
+  divisor--;
 }
