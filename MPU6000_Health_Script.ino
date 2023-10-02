@@ -16,7 +16,7 @@ unsigned long startSampleLoop;
 unsigned long endSampleLoop;
 unsigned long sampleLoopTotal[17];
 
-unsigned long loopTime;
+//unsigned long loopTime;
 
 int numSamples;
 
@@ -35,22 +35,22 @@ void setup() {
   Find out time loop takes and time it takes to iterate numSamples as this needs to be subtracted from the actual
   sample rate time that we calculate in loop(). An example to portray the logic behind this:
 
-  while (numSamples < 100) { <--- 2-3 operations: it's a while loop, check condition, continue or break
+  while (numSamples < 500) { <--- 2-3 operations: it's a while loop, check condition, continue or break
     acc = accelerometer.getSample(); <---- ? operations: this is what we want to measure the time of
     numSamples++; <----- ~2 operations: read current value, iterate this value and save it... we don't want this to be measured
   }
 
   Therefore, measure the time of the loop without the accelerometer readings, so we can subtract the time that takes below
-  to just get the time it takes to measure the accelerometer 100 times
+  to just get the time it takes to measure the accelerometer 500 times
   */
-  int numSamples = 0;
-  startSampleLoop = micros();
-  while (numSamples < 100) {
-    numSamples++;
-  }
-  endSampleLoop = micros();
-  loopTime = endSampleLoop - startSampleLoop;
-  Serial.print("Loop time: "); Serial.print(loopTime); Serial.println();
+  // int numSamples = 0;
+  // startSampleLoop = micros();
+  // while (numSamples < 500) {
+  //   numSamples++;
+  // }
+  // endSampleLoop = micros();
+  // loopTime = endSampleLoop - startSampleLoop;
+  // Serial.print("Loop time: "); Serial.print(loopTime); Serial.println();
 
 }
 
@@ -62,7 +62,7 @@ void loop() {
   accelerometer.setSampleRateDivisor(divisor);
 
   startSampleLoop = micros();
-  while (numSamples < 100) {
+  while (numSamples < 500) {
     acc = accelerometer.getSample();
     numSamples++;
     /*
@@ -77,9 +77,9 @@ void loop() {
   sampleLoopTotal = micros() - startSampleLoop, but it was hypothesized that this micros() reading would
   be less accurate than the way we are doing it above.
   */
-  idx = (divisor/15) % 17;
+  idx = (divisor/15);
   Serial.print("For index "); Serial.print(idx); Serial.println();
-  sampleLoopTotal[idx] = (endSampleLoop - startSampleLoop) - loopTime;
+  sampleLoopTotal[idx] = endSampleLoop - startSampleLoop;
   Serial.print("Time in microseconds: "); Serial.print(sampleLoopTotal[idx]); Serial.println();
 
   if (divisor == 0) {
