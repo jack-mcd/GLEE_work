@@ -41,6 +41,10 @@ void loop() {
   while (numSamples < 100) {
     acc = accelerometer.getSample();
     numSamples++;
+    /*
+    Do we need to account for time it takes to increment numSamples? May not be necessary since presumably the differences
+    in time will be the same where the increments are an added constant no matter what sample rate is
+    */
   }
   endSampleLoop = micros();
   /*
