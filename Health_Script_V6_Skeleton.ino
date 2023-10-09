@@ -58,7 +58,15 @@ void loop() {
   else {
     int numSamples = 0;
     while (numSamples < 500) {
-
+      acc = acc.getSample //THIS IS PSUEDOCODE NEEDS TO BE UPDATED WHEN WE KNOW WHICH LIB WE ARE USING
+    }
+    /*
+    If we have reached this point we have been able to generate 500 samples at the given rate, therefore we
+    can say we have found the highest sample rate the sensor can function at. 
+    */
+    EEPROM.write(lastIdx+1, 1); //indicating this sample rate works
+    while (1) {
+      delay(10000);
     }
   }
 
