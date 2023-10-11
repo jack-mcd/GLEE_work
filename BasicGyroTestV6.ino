@@ -1,3 +1,9 @@
+/*
+Author: Jack McDonald
+Date: October 11, 2023
+Description: Code that will set up the gyroscope on the LunaSat V6.0 and give us one reading to verify it's working
+*/
+
 #include <Adafruit_MPU6050.h>
 #include <Adafruit_Sensor.h>
 #include <Wire.h>
