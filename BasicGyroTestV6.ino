@@ -1,9 +1,3 @@
-/*
-Author: Jack McDonald
-Date: October 11, 2023
-Description: Code that will set up the gyroscope on the LunaSat V6.0 and give us one reading to verify it's working
-*/
-
 #include <Adafruit_MPU6050.h>
 #include <Adafruit_Sensor.h>
 #include <Wire.h>
@@ -14,14 +8,22 @@ sensors_event_t g;
 
 void setup() {
   Serial.begin(9600);
-  mpu.begin();
-  mpu.setAccelerometerRange(MPU6050_RANGE_8_G);
-  mpu.setGyroRange(MPU6050_RANGE_500_DEG);
-  mpu.setSampleRateDivisor(0);
-  mpu.setFilterBandwidth(MPU6050_BAND_21_HZ);
+  if (!mpu.begin()){
+    Serial.println("MPU not initialized");
+  }
+  // mpu.setAccelerometerRange(MPU6050_RANGE_8_G);
+  // mpu.setGyroRange(MPU6050_RANGE_500_DEG);
+  // //mpu.setSampleRateDivisor(0);
+  // mpu.setFilterBandwidth(MPU6050_BAND_21_HZ);
 }
 
 void loop() {
+  //Serial.println(mpu.getSampleRateDivisor());
+  // Adafruit_BusIO_Register sample_rate_div =
+  // Adafruit_BusIO_Register(i2c_dev, MPU6050_SMPLRT_DIV, 1);
+  // sample_rate_div.write(0);
+
+  Serial.println(mpu.getSampleRateDivisor());
 
   gyroObj.getEvent(&g);
   Serial.println("Gyroscope reading: ");
