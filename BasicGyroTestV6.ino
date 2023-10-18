@@ -10,6 +10,14 @@ uint8_t MPU6000::getSampleRateDivisor() {
 	divisor = readByte(MPU6000_SMPLRT_DIV);
 	return divisor;
 }
+
+potentially use the settings below to change the DLPF
+MPU6000_BAND_184_HZ, ///< 184 Hz
+MPU6000_BAND_94_HZ,  ///< 94 Hz
+MPU6000_BAND_44_HZ,  ///< 44 Hz
+MPU6000_BAND_21_HZ,  ///< 21 Hz
+MPU6000_BAND_10_HZ,  ///< 10 Hz
+MPU6000_BAND_5_HZ,   ///< 5 Hz
 */
 
 #include "MPU6000.h"
