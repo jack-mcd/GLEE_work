@@ -1,10 +1,22 @@
 /*
 Author: Jack McDonald
 Date: 10/16/2023
-Description: Testing 17 sample rates of accelerometer on LunaSat V6, what I foound is that sample rate time
-does not change, indicating that it is possible that only gyroscope can change sample rate. Basing this off of
-datasheet that states that sample rate = gyroscope output (kHz) / (1 + sample rate divisor). See datasheet
-about sample rate divisor if curious about why this was inferred, note that this was inferred and not yet verified
+Updated: 10/17/2023
+Description: Testing 17 sample rates of accelerometer on LunaSat V6, what I found is that sample rate time
+does not change, indicating to me that we are not finding the sample rate correctly, I have verified that the
+sample rate should change for accelerometer too.
+
+**NOTE** this code was written with the following changes to the MPU6000 class (.cpp & .h)
+
+uint8_t MPU6000::getSampleRateDivisor() {
+	uint8_t divisor;
+	divisor = readByte(MPU6000_SMPLRT_DIV);
+	return divisor;
+}
+
+mpu6000_bandwidth_t MPU6000::getFilterBandwidth() {
+	return readByte(MPU6000_CONFIG);
+}
 */
 
 #include "MPU6000.h"
@@ -25,6 +37,8 @@ void setup() {
   Serial.begin(9600);
   accelerometer.begin();
   accelerometer.initialize();
+  accelerometer.setFilterBandwidth(MPU6000_BAND_5_HZ); //set gyroscope output rate to 1 kHz
+  Serial.println(accelerometer.getFilterBandwidth());
 }
 
 void loop() {
