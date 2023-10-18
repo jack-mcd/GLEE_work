@@ -37,7 +37,7 @@ void setup() {
   Serial.begin(9600);
   accelerometer.begin();
   accelerometer.initialize();
-  accelerometer.setFilterBandwidth(MPU6000_BAND_5_HZ); //set gyroscope output rate to 1 kHz
+  accelerometer.setFilterBandwidth(MPU6000_BAND_184_HZ); //set gyroscope output rate to 1 kHz
   Serial.println(accelerometer.getFilterBandwidth());
 }
 
@@ -49,16 +49,15 @@ void loop() {
   Serial.print("Sample rate divisor: "); Serial.println(accelerometer.getSampleRateDivisor());
 
   startSampleLoop = millis();
-  while (numSamples < 1000) {
-    acc = accelerometer.getSample();
+  while (millis() - startSampleLoop < 5000UL) {
+    accelerometer.getRawAcc();
     numSamples++;
   }
-  endSampleLoop = millis();
 
   idx = divisor/15;
+  sampleLoopTotal[idx] = numSamples;
   Serial.print("For index "); Serial.print(idx); Serial.println();
-  sampleLoopTotal[idx] = endSampleLoop - startSampleLoop;
-  Serial.print("Time in milliseconds: "); Serial.print(sampleLoopTotal[idx]); Serial.println();
+  Serial.print("Samples / sec: "); Serial.println(sampleLoopTotal[idx]);
 
   if (divisor == 255) {
     Serial.println("Tested 17 Sample Rates");
