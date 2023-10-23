@@ -31,6 +31,13 @@ class HealthScript {
         sensors[4] = SX1272 status
         */
         bool sensors[5];
+        
+        /*
+        questions about bitstring, how many can we have per LunaSat? will we just hardcode the value
+        in here? the more that doesn't meet the eye the better so people can understand code from a
+        high-level
+        */
+        char bitstring[35];
 };
 
 #endif
